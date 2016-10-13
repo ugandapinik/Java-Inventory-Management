@@ -9,6 +9,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import javax.swing.JOptionPane;
 
 /**
@@ -17,6 +19,8 @@ import javax.swing.JOptionPane;
  */
 public class Create_Employee extends javax.swing.JInternalFrame {
 
+    private static String gender = "";
+    
     Connection conn = null;
     PreparedStatement stmt = null;
     ResultSet rs = null;
@@ -65,10 +69,10 @@ public class Create_Employee extends javax.swing.JInternalFrame {
             while(rs.next()){
                 //display on the result.
                 String result = rs.getString("dept_name");
-                System.out.println(result);
-                input_position.addItem(result.toString());
-                
+                input_position.addItem(result);
             }
+            
+            
             
         }catch(Exception ex){
             
@@ -86,6 +90,7 @@ public class Create_Employee extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         title = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
@@ -93,8 +98,8 @@ public class Create_Employee extends javax.swing.JInternalFrame {
         input_firstname = new javax.swing.JTextField();
         label_lastname = new javax.swing.JLabel();
         input_lastname = new javax.swing.JTextField();
-        label_id = new javax.swing.JLabel();
-        input_id = new javax.swing.JTextField();
+        label_email_address = new javax.swing.JLabel();
+        input_email_address = new javax.swing.JTextField();
         label_username = new javax.swing.JLabel();
         input_username = new javax.swing.JTextField();
         label_post = new javax.swing.JLabel();
@@ -102,15 +107,15 @@ public class Create_Employee extends javax.swing.JInternalFrame {
         label_phonenumber = new javax.swing.JLabel();
         input_phonenumber = new javax.swing.JTextField();
         label_gender = new javax.swing.JLabel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        input_gender1 = new javax.swing.JRadioButton();
+        input_gender2 = new javax.swing.JRadioButton();
         label_dob = new javax.swing.JLabel();
         day = new javax.swing.JComboBox<>();
         month = new javax.swing.JComboBox<>();
         year = new javax.swing.JComboBox<>();
         label_address = new javax.swing.JLabel();
-        input_address = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        input_address_scroll = new javax.swing.JScrollPane();
+        input_address = new javax.swing.JTextArea();
         btn_submit = new javax.swing.JButton();
 
         setClosable(true);
@@ -124,7 +129,7 @@ public class Create_Employee extends javax.swing.JInternalFrame {
 
         label_lastname.setText("Last Name");
 
-        label_id.setText("ID");
+        label_email_address.setText("Email Address");
 
         label_username.setText("Username");
 
@@ -134,17 +139,29 @@ public class Create_Employee extends javax.swing.JInternalFrame {
 
         label_gender.setText("Gender");
 
-        jRadioButton1.setText("Male");
+        buttonGroup1.add(input_gender1);
+        input_gender1.setText("Male");
+        input_gender1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                input_gender1ActionPerformed(evt);
+            }
+        });
 
-        jRadioButton2.setText("Female");
+        buttonGroup1.add(input_gender2);
+        input_gender2.setText("Female");
+        input_gender2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                input_gender2ActionPerformed(evt);
+            }
+        });
 
         label_dob.setText("DOB");
 
         label_address.setText("Address");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        input_address.setViewportView(jTextArea1);
+        input_address.setColumns(20);
+        input_address.setRows(5);
+        input_address_scroll.setViewportView(input_address);
 
         btn_submit.setText("Create Account");
         btn_submit.addActionListener(new java.awt.event.ActionListener() {
@@ -161,7 +178,7 @@ public class Create_Employee extends javax.swing.JInternalFrame {
                 .addGap(30, 30, 30)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(input_address)
+                        .addComponent(input_address_scroll)
                         .addComponent(label_address)
                         .addComponent(label_gender)
                         .addComponent(title)
@@ -181,10 +198,10 @@ public class Create_Employee extends javax.swing.JInternalFrame {
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                             .addComponent(input_position, javax.swing.GroupLayout.Alignment.LEADING, 0, 130, Short.MAX_VALUE)
-                                            .addComponent(input_id, javax.swing.GroupLayout.Alignment.LEADING))
+                                            .addComponent(input_email_address, javax.swing.GroupLayout.Alignment.LEADING))
                                         .addGroup(jPanel1Layout.createSequentialGroup()
                                             .addGap(2, 2, 2)
-                                            .addComponent(label_id, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addComponent(label_email_address, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                     .addGap(45, 45, 45)))
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(input_phonenumber, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -196,9 +213,9 @@ public class Create_Employee extends javax.swing.JInternalFrame {
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jRadioButton1)
+                                    .addComponent(input_gender1)
                                     .addGap(18, 18, 18)
-                                    .addComponent(jRadioButton2))
+                                    .addComponent(input_gender2))
                                 .addGroup(jPanel1Layout.createSequentialGroup()
                                     .addComponent(label_dob)
                                     .addGap(18, 18, 18)
@@ -229,27 +246,27 @@ public class Create_Employee extends javax.swing.JInternalFrame {
                         .addComponent(input_lastname, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(label_id)
+                    .addComponent(label_email_address)
                     .addComponent(label_username))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(input_id, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(input_email_address, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(input_username, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(label_post)
                     .addComponent(label_phonenumber))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(input_position, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(input_phonenumber, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(input_phonenumber, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
+                    .addComponent(input_position))
+                .addGap(11, 11, 11)
                 .addComponent(label_gender)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRadioButton1)
-                    .addComponent(jRadioButton2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(input_gender1)
+                    .addComponent(input_gender2))
+                .addGap(53, 53, 53)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(day, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(label_dob)
@@ -258,10 +275,10 @@ public class Create_Employee extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(label_address)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(input_address, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(input_address_scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btn_submit, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -294,32 +311,90 @@ public class Create_Employee extends javax.swing.JInternalFrame {
         String username = input_username.getText();
         String firstname = input_firstname.getText();
         String lastname = input_lastname.getText();
-        String id = input_id.getText();
+        String password = "12345";
+        String email_address = input_email_address.getText();
+        String position = input_position.getSelectedItem().toString();
+        String sex = gender;
         String phone = input_phonenumber.getText();
+        String date = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss").format(Calendar.getInstance().getTime());
+        String address = input_address.getText();
         
+        //collect date of birth.
+        String dob_day = (String) day.getSelectedItem();
+        String dob_month = (String) month.getSelectedItem();
+        String dob_year = (String) year.getSelectedItem();
+        
+        String dob = dob_year + "-" + dob_month + "-" + dob_day; 
+        System.out.println(dob);
+        System.out.println(address);
+        
+        
+        String sql = "INSERT INTO users(username,email_address,password,created_at,firstname,lastname,dob,gender,address,role) VALUES(?,?,?,?,?,?,?,?,?,?)";
+        
+        try{
+            
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, username);
+            stmt.setString(2, email_address);
+            stmt.setString(3, password);
+            stmt.setString(4, date);
+            stmt.setString(5, firstname);
+            stmt.setString(6, lastname);
+            stmt.setString(7, dob);
+            stmt.setString(8, sex);
+            stmt.setString(9, address);
+            stmt.setString(10, position);
+            
+            System.out.println(sql);
+            int result = stmt.executeUpdate();
+            
+            if(result > 0){
+                JOptionPane.showMessageDialog(this, result + " " + position + " created successfully.","Success", JOptionPane.PLAIN_MESSAGE);
+            }else{
+                JOptionPane.showMessageDialog(this, position + " cannot created.","Failed", JOptionPane.ERROR_MESSAGE);
+            }
+            
+            
+        }catch(Exception ex){
+            ex.printStackTrace();
+            
+        }
+         	 	 	 	 	 	 	 	 	
+                
     }//GEN-LAST:event_btn_submitActionPerformed
+
+    private void input_gender1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_input_gender1ActionPerformed
+        // TODO add your handling code here:
+        gender = "male";
+    }//GEN-LAST:event_input_gender1ActionPerformed
+
+    private void input_gender2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_input_gender2ActionPerformed
+        // TODO add your handling code here:
+        gender = "female";
+    }//GEN-LAST:event_input_gender2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_submit;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> day;
-    private javax.swing.JScrollPane input_address;
+    private javax.swing.JTextArea input_address;
+    private javax.swing.JScrollPane input_address_scroll;
+    private javax.swing.JTextField input_email_address;
     private javax.swing.JTextField input_firstname;
-    private javax.swing.JTextField input_id;
+    private javax.swing.JRadioButton input_gender1;
+    private javax.swing.JRadioButton input_gender2;
     private javax.swing.JTextField input_lastname;
     private javax.swing.JTextField input_phonenumber;
     private javax.swing.JComboBox<String> input_position;
     private javax.swing.JTextField input_username;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JLabel label_address;
     private javax.swing.JLabel label_dob;
+    private javax.swing.JLabel label_email_address;
     private javax.swing.JLabel label_firstname;
     private javax.swing.JLabel label_gender;
-    private javax.swing.JLabel label_id;
     private javax.swing.JLabel label_lastname;
     private javax.swing.JLabel label_phonenumber;
     private javax.swing.JLabel label_post;

@@ -19,7 +19,7 @@ public class Dashboard extends javax.swing.JFrame {
      */
     public Dashboard() {
         this.setUndecorated(false);
-        this.setAlwaysOnTop(true);
+//        this.setAlwaysOnTop(true);
         this.setResizable(false);
         this.setVisible(true);
         initComponents();
